@@ -121,9 +121,6 @@ public interface NamespaceSharedAccessAuthorizationRuleResource extends HasInner
         interface WithNamespace {
            /**
             * Specifies resourceGroupName, namespaceName.
-            * @param resourceGroupName The name of the resource group
-            * @param namespaceName The namespace name
-            * @return the next definition stage
             */
             WithProperties withExistingNamespace(String resourceGroupName, String namespaceName);
         }
@@ -134,8 +131,6 @@ public interface NamespaceSharedAccessAuthorizationRuleResource extends HasInner
         interface WithProperties {
            /**
             * Specifies properties.
-            * @param properties Properties of the Namespace AuthorizationRules
-            * @return the next definition stage
             */
             WithCreate withProperties(SharedAccessAuthorizationRuleProperties properties);
         }
@@ -164,8 +159,6 @@ public interface NamespaceSharedAccessAuthorizationRuleResource extends HasInner
         interface WithProperties {
             /**
              * Specifies properties.
-             * @param properties Properties of the Namespace AuthorizationRules
-             * @return the next update stage
              */
             Update withProperties(SharedAccessAuthorizationRuleProperties properties);
         }

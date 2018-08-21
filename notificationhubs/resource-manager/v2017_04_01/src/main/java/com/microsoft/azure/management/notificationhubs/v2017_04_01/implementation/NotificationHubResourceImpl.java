@@ -79,7 +79,7 @@ class NotificationHubResourceImpl extends CreatableUpdatableImpl<NotificationHub
     @Override
     public Observable<NotificationHubResource> updateResourceAsync() {
         NotificationHubsInner client = this.manager().inner().notificationHubs();
-        return client.patchAsync(this.resourceGroupName, this.namespaceName, this.notificationHubName, this.updateParameter)
+        return client.patchAsync(this.updateParameter, this.resourceGroupName, this.namespaceName, this.notificationHubName)
             .map(new Func1<NotificationHubResourceInner, NotificationHubResourceInner>() {
                @Override
                public NotificationHubResourceInner call(NotificationHubResourceInner resource) {

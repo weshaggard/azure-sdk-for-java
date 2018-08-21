@@ -81,9 +81,6 @@ public interface NamespaceSharedAccessAuthorizationRuleResource extends HasInner
         interface WithNamespace {
            /**
             * Specifies resourceGroupName, namespaceName.
-            * @param resourceGroupName The name of the resource group
-            * @param namespaceName The namespace name
-            * @return the next definition stage
             */
             WithLocation withExistingNamespace(String resourceGroupName, String namespaceName);
         }
@@ -94,8 +91,6 @@ public interface NamespaceSharedAccessAuthorizationRuleResource extends HasInner
         interface WithLocation {
            /**
             * Specifies location.
-            * @param location Resource location
-            * @return the next definition stage
             */
             WithProperties withLocation(String location);
         }
@@ -106,8 +101,6 @@ public interface NamespaceSharedAccessAuthorizationRuleResource extends HasInner
         interface WithProperties {
            /**
             * Specifies properties.
-            * @param properties Properties of the Namespace AuthorizationRules
-            * @return the next definition stage
             */
             WithCreate withProperties(SharedAccessAuthorizationRuleProperties properties);
         }
@@ -118,8 +111,6 @@ public interface NamespaceSharedAccessAuthorizationRuleResource extends HasInner
         interface WithSku {
             /**
              * Specifies sku.
-             * @param sku The sku of the created namespace
-             * @return the next definition stage
              */
             WithCreate withSku(Sku sku);
         }
@@ -130,8 +121,6 @@ public interface NamespaceSharedAccessAuthorizationRuleResource extends HasInner
         interface WithTags {
             /**
              * Specifies tags.
-             * @param tags Resource tags
-             * @return the next definition stage
              */
             WithCreate withTags(Map<String, String> tags);
         }
@@ -160,8 +149,6 @@ public interface NamespaceSharedAccessAuthorizationRuleResource extends HasInner
         interface WithSku {
             /**
              * Specifies sku.
-             * @param sku The sku of the created namespace
-             * @return the next update stage
              */
             Update withSku(Sku sku);
         }
@@ -172,8 +159,6 @@ public interface NamespaceSharedAccessAuthorizationRuleResource extends HasInner
         interface WithTags {
             /**
              * Specifies tags.
-             * @param tags Resource tags
-             * @return the next update stage
              */
             Update withTags(Map<String, String> tags);
         }

@@ -74,10 +74,6 @@ public interface NotificationHubNamespaceSharedAccessAuthorizationRuleResource e
         interface WithNotificationHub {
            /**
             * Specifies resourceGroupName, namespaceName, notificationHubName.
-            * @param resourceGroupName The name of the resource group
-            * @param namespaceName The namespace name
-            * @param notificationHubName The notification hub name
-            * @return the next definition stage
             */
             WithProperties withExistingNotificationHub(String resourceGroupName, String namespaceName, String notificationHubName);
         }
@@ -88,8 +84,6 @@ public interface NotificationHubNamespaceSharedAccessAuthorizationRuleResource e
         interface WithProperties {
            /**
             * Specifies properties.
-            * @param properties Gets or sets properties of the Namespace AuthorizationRules
-            * @return the next definition stage
             */
             WithCreate withProperties(SharedAccessAuthorizationRuleProperties properties);
         }
@@ -100,8 +94,6 @@ public interface NotificationHubNamespaceSharedAccessAuthorizationRuleResource e
         interface WithLocation {
             /**
              * Specifies location.
-             * @param location Gets or sets Namespace data center location
-             * @return the next definition stage
              */
             WithCreate withLocation(String location);
         }
@@ -112,8 +104,6 @@ public interface NotificationHubNamespaceSharedAccessAuthorizationRuleResource e
         interface WithName {
             /**
              * Specifies name.
-             * @param name Gets or sets Name of the Namespace AuthorizationRule
-             * @return the next definition stage
              */
             WithCreate withName(String name);
         }
@@ -142,8 +132,6 @@ public interface NotificationHubNamespaceSharedAccessAuthorizationRuleResource e
         interface WithLocation {
             /**
              * Specifies location.
-             * @param location Gets or sets Namespace data center location
-             * @return the next update stage
              */
             Update withLocation(String location);
         }
@@ -154,8 +142,6 @@ public interface NotificationHubNamespaceSharedAccessAuthorizationRuleResource e
         interface WithName {
             /**
              * Specifies name.
-             * @param name Gets or sets Name of the Namespace AuthorizationRule
-             * @return the next update stage
              */
             Update withName(String name);
         }

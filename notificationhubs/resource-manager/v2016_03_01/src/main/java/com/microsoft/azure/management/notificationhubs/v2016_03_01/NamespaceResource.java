@@ -56,6 +56,11 @@ public interface NamespaceResource extends HasInner<NamespaceResourceInner>, Res
     String provisioningState();
 
     /**
+     * @return the region value.
+     */
+    String region();
+
+    /**
      * @return the scaleUnit value.
      */
     String scaleUnit();
@@ -103,133 +108,121 @@ public interface NamespaceResource extends HasInner<NamespaceResourceInner>, Res
         }
 
         /**
-         * The stage of the namespaceresource definition allowing to specify CreatedAt.
+         * The stage of the namespaceresource update allowing to specify CreatedAt.
          */
         interface WithCreatedAt {
             /**
              * Specifies createdAt.
-             * @param createdAt The time the namespace was created
-             * @return the next definition stage
              */
             WithCreate withCreatedAt(DateTime createdAt);
         }
 
         /**
-         * The stage of the namespaceresource definition allowing to specify Critical.
+         * The stage of the namespaceresource update allowing to specify Critical.
          */
         interface WithCritical {
             /**
              * Specifies critical.
-             * @param critical Whether or not the namespace is set as Critical
-             * @return the next definition stage
              */
             WithCreate withCritical(Boolean critical);
         }
 
         /**
-         * The stage of the namespaceresource definition allowing to specify Enabled.
+         * The stage of the namespaceresource update allowing to specify Enabled.
          */
         interface WithEnabled {
             /**
              * Specifies enabled.
-             * @param enabled Whether or not the namespace is currently enabled
-             * @return the next definition stage
              */
             WithCreate withEnabled(Boolean enabled);
         }
 
         /**
-         * The stage of the namespaceresource definition allowing to specify NamespaceCreateOrUpdateParametersName.
+         * The stage of the namespaceresource update allowing to specify NamespaceCreateOrUpdateParametersName.
          */
         interface WithNamespaceCreateOrUpdateParametersName {
             /**
              * Specifies namespaceCreateOrUpdateParametersName.
-             * @param namespaceCreateOrUpdateParametersName The name of the namespace
-             * @return the next definition stage
              */
             WithCreate withNamespaceCreateOrUpdateParametersName(String namespaceCreateOrUpdateParametersName);
         }
 
         /**
-         * The stage of the namespaceresource definition allowing to specify NamespaceType.
+         * The stage of the namespaceresource update allowing to specify NamespaceType.
          */
         interface WithNamespaceType {
             /**
              * Specifies namespaceType.
-             * @param namespaceType The namespace type. Possible values include: 'Messaging', 'NotificationHub'
-             * @return the next definition stage
              */
             WithCreate withNamespaceType(NamespaceType namespaceType);
         }
 
         /**
-         * The stage of the namespaceresource definition allowing to specify ProvisioningState.
+         * The stage of the namespaceresource update allowing to specify ProvisioningState.
          */
         interface WithProvisioningState {
             /**
              * Specifies provisioningState.
-             * @param provisioningState Provisioning state of the Namespace
-             * @return the next definition stage
              */
             WithCreate withProvisioningState(String provisioningState);
         }
 
         /**
-         * The stage of the namespaceresource definition allowing to specify ScaleUnit.
+         * The stage of the namespaceresource update allowing to specify Region.
+         */
+        interface WithRegion {
+            /**
+             * Specifies region.
+             */
+            WithCreate withRegion(String region);
+        }
+
+        /**
+         * The stage of the namespaceresource update allowing to specify ScaleUnit.
          */
         interface WithScaleUnit {
             /**
              * Specifies scaleUnit.
-             * @param scaleUnit ScaleUnit where the namespace gets created
-             * @return the next definition stage
              */
             WithCreate withScaleUnit(String scaleUnit);
         }
 
         /**
-         * The stage of the namespaceresource definition allowing to specify ServiceBusEndpoint.
+         * The stage of the namespaceresource update allowing to specify ServiceBusEndpoint.
          */
         interface WithServiceBusEndpoint {
             /**
              * Specifies serviceBusEndpoint.
-             * @param serviceBusEndpoint Endpoint you can use to perform NotificationHub operations
-             * @return the next definition stage
              */
             WithCreate withServiceBusEndpoint(String serviceBusEndpoint);
         }
 
         /**
-         * The stage of the namespaceresource definition allowing to specify Sku.
+         * The stage of the namespaceresource update allowing to specify Sku.
          */
         interface WithSku {
             /**
              * Specifies sku.
-             * @param sku The sku of the created namespace
-             * @return the next definition stage
              */
             WithCreate withSku(Sku sku);
         }
 
         /**
-         * The stage of the namespaceresource definition allowing to specify Status.
+         * The stage of the namespaceresource update allowing to specify Status.
          */
         interface WithStatus {
             /**
              * Specifies status.
-             * @param status Status of the namespace. It can be any of these values:1 = Created/Active2 = Creating3 = Suspended4 = Deleting
-             * @return the next definition stage
              */
             WithCreate withStatus(String status);
         }
 
         /**
-         * The stage of the namespaceresource definition allowing to specify SubscriptionId.
+         * The stage of the namespaceresource update allowing to specify SubscriptionId.
          */
         interface WithSubscriptionId {
             /**
              * Specifies subscriptionId.
-             * @param subscriptionId The Id of the Azure subscription associated with the namespace
-             * @return the next definition stage
              */
             WithCreate withSubscriptionId(String subscriptionId);
         }
@@ -239,7 +232,7 @@ public interface NamespaceResource extends HasInner<NamespaceResourceInner>, Res
          * the resource to be created (via {@link WithCreate#create()}), but also allows
          * for any other optional settings to be specified.
          */
-        interface WithCreate extends Creatable<NamespaceResource>, Resource.DefinitionWithTags<WithCreate>, DefinitionStages.WithCreatedAt, DefinitionStages.WithCritical, DefinitionStages.WithEnabled, DefinitionStages.WithNamespaceCreateOrUpdateParametersName, DefinitionStages.WithNamespaceType, DefinitionStages.WithProvisioningState, DefinitionStages.WithScaleUnit, DefinitionStages.WithServiceBusEndpoint, DefinitionStages.WithSku, DefinitionStages.WithStatus, DefinitionStages.WithSubscriptionId {
+        interface WithCreate extends Creatable<NamespaceResource>, Resource.DefinitionWithTags<WithCreate>, DefinitionStages.WithCreatedAt, DefinitionStages.WithCritical, DefinitionStages.WithEnabled, DefinitionStages.WithNamespaceCreateOrUpdateParametersName, DefinitionStages.WithNamespaceType, DefinitionStages.WithProvisioningState, DefinitionStages.WithRegion, DefinitionStages.WithScaleUnit, DefinitionStages.WithServiceBusEndpoint, DefinitionStages.WithSku, DefinitionStages.WithStatus, DefinitionStages.WithSubscriptionId {
         }
     }
     /**
@@ -253,13 +246,11 @@ public interface NamespaceResource extends HasInner<NamespaceResourceInner>, Res
      */
     interface UpdateStages {
         /**
-         * The stage of the namespaceresource update allowing to specify Sku.
+         * The stage of the namespaceresource {0} allowing to specify Sku.
          */
         interface WithSku {
             /**
              * Specifies sku.
-             * @param sku The sku of the created namespace
-             * @return the next update stage
              */
             Update withSku(Sku sku);
         }

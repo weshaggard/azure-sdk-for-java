@@ -75,9 +75,6 @@ public interface NotificationHubResource extends HasInner<NotificationHubResourc
         interface WithNamespace {
            /**
             * Specifies resourceGroupName, namespaceName.
-            * @param resourceGroupName The name of the resource group
-            * @param namespaceName The namespace name
-            * @return the next definition stage
             */
             WithLocation withExistingNamespace(String resourceGroupName, String namespaceName);
         }
@@ -88,8 +85,6 @@ public interface NotificationHubResource extends HasInner<NotificationHubResourc
         interface WithLocation {
            /**
             * Specifies location.
-            * @param location Gets or sets NotificationHub data center location
-            * @return the next definition stage
             */
             WithProperties withLocation(String location);
         }
@@ -100,8 +95,6 @@ public interface NotificationHubResource extends HasInner<NotificationHubResourc
         interface WithProperties {
            /**
             * Specifies properties.
-            * @param properties Gets or sets properties of the NotificationHub
-            * @return the next definition stage
             */
             WithCreate withProperties(NotificationHubProperties properties);
         }
@@ -112,8 +105,6 @@ public interface NotificationHubResource extends HasInner<NotificationHubResourc
         interface WithTags {
             /**
              * Specifies tags.
-             * @param tags Gets or sets NotificationHub tags
-             * @return the next definition stage
              */
             WithCreate withTags(Map<String, String> tags);
         }
@@ -142,8 +133,6 @@ public interface NotificationHubResource extends HasInner<NotificationHubResourc
         interface WithTags {
             /**
              * Specifies tags.
-             * @param tags Gets or sets NotificationHub tags
-             * @return the next update stage
              */
             Update withTags(Map<String, String> tags);
         }

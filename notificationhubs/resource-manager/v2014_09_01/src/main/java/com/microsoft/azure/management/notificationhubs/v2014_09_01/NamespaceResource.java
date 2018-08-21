@@ -57,9 +57,7 @@ public interface NamespaceResource extends HasInner<NamespaceResourceInner>, Res
         interface WithProperties {
            /**
             * Specifies properties.
-            * @param properties Gets or sets properties of the Namespace
-            * @return the next definition stage
-*/
+            */
             WithCreate withProperties(NamespaceProperties properties);
         }
 

@@ -74,9 +74,6 @@ public interface NamespaceSharedAccessAuthorizationRuleResource extends HasInner
         interface WithNamespace {
            /**
             * Specifies resourceGroupName, namespaceName.
-            * @param resourceGroupName The name of the resource group
-            * @param namespaceName The namespace name
-            * @return the next definition stage
             */
             WithProperties withExistingNamespace(String resourceGroupName, String namespaceName);
         }
@@ -87,8 +84,6 @@ public interface NamespaceSharedAccessAuthorizationRuleResource extends HasInner
         interface WithProperties {
            /**
             * Specifies properties.
-            * @param properties Gets or sets properties of the Namespace AuthorizationRules
-            * @return the next definition stage
             */
             WithCreate withProperties(SharedAccessAuthorizationRuleProperties properties);
         }
@@ -99,8 +94,6 @@ public interface NamespaceSharedAccessAuthorizationRuleResource extends HasInner
         interface WithLocation {
             /**
              * Specifies location.
-             * @param location Gets or sets Namespace data center location
-             * @return the next definition stage
              */
             WithCreate withLocation(String location);
         }
@@ -111,8 +104,6 @@ public interface NamespaceSharedAccessAuthorizationRuleResource extends HasInner
         interface WithName {
             /**
              * Specifies name.
-             * @param name Gets or sets Name of the Namespace AuthorizationRule
-             * @return the next definition stage
              */
             WithCreate withName(String name);
         }
@@ -141,8 +132,6 @@ public interface NamespaceSharedAccessAuthorizationRuleResource extends HasInner
         interface WithLocation {
             /**
              * Specifies location.
-             * @param location Gets or sets Namespace data center location
-             * @return the next update stage
              */
             Update withLocation(String location);
         }
@@ -153,8 +142,6 @@ public interface NamespaceSharedAccessAuthorizationRuleResource extends HasInner
         interface WithName {
             /**
              * Specifies name.
-             * @param name Gets or sets Name of the Namespace AuthorizationRule
-             * @return the next update stage
              */
             Update withName(String name);
         }

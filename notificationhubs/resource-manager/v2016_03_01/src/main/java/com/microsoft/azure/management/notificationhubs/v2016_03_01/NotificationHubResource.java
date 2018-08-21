@@ -121,9 +121,6 @@ public interface NotificationHubResource extends HasInner<NotificationHubResourc
         interface WithNamespace {
            /**
             * Specifies resourceGroupName, namespaceName.
-            * @param resourceGroupName The name of the resource group
-            * @param namespaceName The namespace name
-            * @return the next definition stage
             */
             WithLocation withExistingNamespace(String resourceGroupName, String namespaceName);
         }
@@ -134,8 +131,6 @@ public interface NotificationHubResource extends HasInner<NotificationHubResourc
         interface WithLocation {
            /**
             * Specifies location.
-            * @param location Resource location
-            * @return the next definition stage
             */
             WithCreate withLocation(String location);
         }
@@ -146,8 +141,6 @@ public interface NotificationHubResource extends HasInner<NotificationHubResourc
         interface WithAdmCredential {
             /**
              * Specifies admCredential.
-             * @param admCredential The AdmCredential of the created NotificationHub
-             * @return the next definition stage
              */
             WithCreate withAdmCredential(AdmCredential admCredential);
         }
@@ -158,8 +151,6 @@ public interface NotificationHubResource extends HasInner<NotificationHubResourc
         interface WithApnsCredential {
             /**
              * Specifies apnsCredential.
-             * @param apnsCredential The ApnsCredential of the created NotificationHub
-             * @return the next definition stage
              */
             WithCreate withApnsCredential(ApnsCredential apnsCredential);
         }
@@ -170,8 +161,6 @@ public interface NotificationHubResource extends HasInner<NotificationHubResourc
         interface WithAuthorizationRules {
             /**
              * Specifies authorizationRules.
-             * @param authorizationRules The AuthorizationRules of the created NotificationHub
-             * @return the next definition stage
              */
             WithCreate withAuthorizationRules(List<SharedAccessAuthorizationRuleProperties> authorizationRules);
         }
@@ -182,8 +171,6 @@ public interface NotificationHubResource extends HasInner<NotificationHubResourc
         interface WithBaiduCredential {
             /**
              * Specifies baiduCredential.
-             * @param baiduCredential The BaiduCredential of the created NotificationHub
-             * @return the next definition stage
              */
             WithCreate withBaiduCredential(BaiduCredential baiduCredential);
         }
@@ -194,8 +181,6 @@ public interface NotificationHubResource extends HasInner<NotificationHubResourc
         interface WithGcmCredential {
             /**
              * Specifies gcmCredential.
-             * @param gcmCredential The GcmCredential of the created NotificationHub
-             * @return the next definition stage
              */
             WithCreate withGcmCredential(GcmCredential gcmCredential);
         }
@@ -206,8 +191,6 @@ public interface NotificationHubResource extends HasInner<NotificationHubResourc
         interface WithMpnsCredential {
             /**
              * Specifies mpnsCredential.
-             * @param mpnsCredential The MpnsCredential of the created NotificationHub
-             * @return the next definition stage
              */
             WithCreate withMpnsCredential(MpnsCredential mpnsCredential);
         }
@@ -218,8 +201,6 @@ public interface NotificationHubResource extends HasInner<NotificationHubResourc
         interface WithNotificationHubCreateOrUpdateParametersName {
             /**
              * Specifies notificationHubCreateOrUpdateParametersName.
-             * @param notificationHubCreateOrUpdateParametersName The NotificationHub name
-             * @return the next definition stage
              */
             WithCreate withNotificationHubCreateOrUpdateParametersName(String notificationHubCreateOrUpdateParametersName);
         }
@@ -230,8 +211,6 @@ public interface NotificationHubResource extends HasInner<NotificationHubResourc
         interface WithRegistrationTtl {
             /**
              * Specifies registrationTtl.
-             * @param registrationTtl The RegistrationTtl of the created NotificationHub
-             * @return the next definition stage
              */
             WithCreate withRegistrationTtl(String registrationTtl);
         }
@@ -242,8 +221,6 @@ public interface NotificationHubResource extends HasInner<NotificationHubResourc
         interface WithSku {
             /**
              * Specifies sku.
-             * @param sku The sku of the created namespace
-             * @return the next definition stage
              */
             WithCreate withSku(Sku sku);
         }
@@ -254,8 +231,6 @@ public interface NotificationHubResource extends HasInner<NotificationHubResourc
         interface WithTags {
             /**
              * Specifies tags.
-             * @param tags Resource tags
-             * @return the next definition stage
              */
             WithCreate withTags(Map<String, String> tags);
         }
@@ -266,8 +241,6 @@ public interface NotificationHubResource extends HasInner<NotificationHubResourc
         interface WithWnsCredential {
             /**
              * Specifies wnsCredential.
-             * @param wnsCredential The WnsCredential of the created NotificationHub
-             * @return the next definition stage
              */
             WithCreate withWnsCredential(WnsCredential wnsCredential);
         }
@@ -296,8 +269,6 @@ public interface NotificationHubResource extends HasInner<NotificationHubResourc
         interface WithAdmCredential {
             /**
              * Specifies admCredential.
-             * @param admCredential The AdmCredential of the created NotificationHub
-             * @return the next update stage
              */
             Update withAdmCredential(AdmCredential admCredential);
         }
@@ -308,8 +279,6 @@ public interface NotificationHubResource extends HasInner<NotificationHubResourc
         interface WithApnsCredential {
             /**
              * Specifies apnsCredential.
-             * @param apnsCredential The ApnsCredential of the created NotificationHub
-             * @return the next update stage
              */
             Update withApnsCredential(ApnsCredential apnsCredential);
         }
@@ -320,8 +289,6 @@ public interface NotificationHubResource extends HasInner<NotificationHubResourc
         interface WithAuthorizationRules {
             /**
              * Specifies authorizationRules.
-             * @param authorizationRules The AuthorizationRules of the created NotificationHub
-             * @return the next update stage
              */
             Update withAuthorizationRules(List<SharedAccessAuthorizationRuleProperties> authorizationRules);
         }
@@ -332,8 +299,6 @@ public interface NotificationHubResource extends HasInner<NotificationHubResourc
         interface WithBaiduCredential {
             /**
              * Specifies baiduCredential.
-             * @param baiduCredential The BaiduCredential of the created NotificationHub
-             * @return the next update stage
              */
             Update withBaiduCredential(BaiduCredential baiduCredential);
         }
@@ -344,8 +309,6 @@ public interface NotificationHubResource extends HasInner<NotificationHubResourc
         interface WithGcmCredential {
             /**
              * Specifies gcmCredential.
-             * @param gcmCredential The GcmCredential of the created NotificationHub
-             * @return the next update stage
              */
             Update withGcmCredential(GcmCredential gcmCredential);
         }
@@ -356,8 +319,6 @@ public interface NotificationHubResource extends HasInner<NotificationHubResourc
         interface WithMpnsCredential {
             /**
              * Specifies mpnsCredential.
-             * @param mpnsCredential The MpnsCredential of the created NotificationHub
-             * @return the next update stage
              */
             Update withMpnsCredential(MpnsCredential mpnsCredential);
         }
@@ -368,8 +329,6 @@ public interface NotificationHubResource extends HasInner<NotificationHubResourc
         interface WithNotificationHubCreateOrUpdateParametersName {
             /**
              * Specifies notificationHubCreateOrUpdateParametersName.
-             * @param notificationHubCreateOrUpdateParametersName The NotificationHub name
-             * @return the next update stage
              */
             Update withNotificationHubCreateOrUpdateParametersName(String notificationHubCreateOrUpdateParametersName);
         }
@@ -380,8 +339,6 @@ public interface NotificationHubResource extends HasInner<NotificationHubResourc
         interface WithRegistrationTtl {
             /**
              * Specifies registrationTtl.
-             * @param registrationTtl The RegistrationTtl of the created NotificationHub
-             * @return the next update stage
              */
             Update withRegistrationTtl(String registrationTtl);
         }
@@ -392,8 +349,6 @@ public interface NotificationHubResource extends HasInner<NotificationHubResourc
         interface WithSku {
             /**
              * Specifies sku.
-             * @param sku The sku of the created namespace
-             * @return the next update stage
              */
             Update withSku(Sku sku);
         }
@@ -404,8 +359,6 @@ public interface NotificationHubResource extends HasInner<NotificationHubResourc
         interface WithTags {
             /**
              * Specifies tags.
-             * @param tags Resource tags
-             * @return the next update stage
              */
             Update withTags(Map<String, String> tags);
         }
@@ -416,8 +369,6 @@ public interface NotificationHubResource extends HasInner<NotificationHubResourc
         interface WithWnsCredential {
             /**
              * Specifies wnsCredential.
-             * @param wnsCredential The WnsCredential of the created NotificationHub
-             * @return the next update stage
              */
             Update withWnsCredential(WnsCredential wnsCredential);
         }
