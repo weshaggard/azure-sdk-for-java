@@ -23,7 +23,6 @@ class BuildStepImpl extends CreatableUpdatableImpl<BuildStep, BuildStepInner, Bu
     private String registryName;
     private String buildTaskName;
     private String stepName;
-    private BuildStepProperties cproperties;
     private BuildStepUpdateParameters updateParameter;
 
     BuildStepImpl(String name, ContainerRegistryManager manager) {
@@ -32,7 +31,6 @@ class BuildStepImpl extends CreatableUpdatableImpl<BuildStep, BuildStepInner, Bu
         // Set resource name
         this.stepName = name;
         //
-        this.cproperties = new BuildStepProperties();
         this.updateParameter = new BuildStepUpdateParameters();
     }
 
@@ -47,7 +45,6 @@ class BuildStepImpl extends CreatableUpdatableImpl<BuildStep, BuildStepInner, Bu
         this.buildTaskName = IdParsingUtils.getValueFromIdByName(inner.id(), "buildTasks");
         this.stepName = IdParsingUtils.getValueFromIdByName(inner.id(), "steps");
         //
-        this.cproperties = new BuildStepProperties();
         this.updateParameter = new BuildStepUpdateParameters();
     }
 
@@ -59,7 +56,7 @@ class BuildStepImpl extends CreatableUpdatableImpl<BuildStep, BuildStepInner, Bu
     @Override
     public Observable<BuildStep> createResourceAsync() {
         BuildStepsInner client = this.manager().inner().buildSteps();
-        return client.createAsync(this.resourceGroupName, this.registryName, this.buildTaskName, this.stepName, this.cproperties)
+        return client.createAsync(this.resourceGroupName, this.registryName, this.buildTaskName, this.stepName)
             .map(new Func1<BuildStepInner, BuildStepInner>() {
                @Override
                public BuildStepInner call(BuildStepInner resource) {
@@ -96,7 +93,6 @@ class BuildStepImpl extends CreatableUpdatableImpl<BuildStep, BuildStepInner, Bu
     }
 
     private void resetCreateUpdateParameters() {
-        this.cproperties = new BuildStepProperties();
         this.updateParameter = new BuildStepUpdateParameters();
     }
 
@@ -125,12 +121,6 @@ class BuildStepImpl extends CreatableUpdatableImpl<BuildStep, BuildStepInner, Bu
         this.resourceGroupName = resourceGroupName;
         this.registryName = registryName;
         this.buildTaskName = buildTaskName;
-        return this;
-    }
-
-    @Override
-    public BuildStepImpl withProperties(BuildStepProperties properties) {
-        this.cproperties = properties;
         return this;
     }
 

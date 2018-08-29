@@ -107,9 +107,6 @@ public interface BuildTask extends HasInner<BuildTaskInner>, Indexable, Refresha
         interface WithRegistry {
            /**
             * Specifies resourceGroupName, registryName.
-            * @param resourceGroupName The name of the resource group to which the container registry belongs
-            * @param registryName The name of the container registry
-            * @return the next definition stage
             */
             WithAlias withExistingRegistry(String resourceGroupName, String registryName);
         }
@@ -120,8 +117,6 @@ public interface BuildTask extends HasInner<BuildTaskInner>, Indexable, Refresha
         interface WithAlias {
            /**
             * Specifies alias.
-            * @param alias The alternative updatable name for a build task
-            * @return the next definition stage
             */
             WithLocation withAlias(String alias);
         }
@@ -132,8 +127,6 @@ public interface BuildTask extends HasInner<BuildTaskInner>, Indexable, Refresha
         interface WithLocation {
            /**
             * Specifies location.
-            * @param location The location of the resource. This cannot be changed after the resource is created
-            * @return the next definition stage
             */
             WithPlatform withLocation(String location);
         }
@@ -144,8 +137,6 @@ public interface BuildTask extends HasInner<BuildTaskInner>, Indexable, Refresha
         interface WithPlatform {
            /**
             * Specifies platform.
-            * @param platform The platform properties against which the build has to happen
-            * @return the next definition stage
             */
             WithSourceRepository withPlatform(PlatformProperties platform);
         }
@@ -156,8 +147,6 @@ public interface BuildTask extends HasInner<BuildTaskInner>, Indexable, Refresha
         interface WithSourceRepository {
            /**
             * Specifies sourceRepository.
-            * @param sourceRepository The properties that describes the source(code) for the build task
-            * @return the next definition stage
             */
             WithCreate withSourceRepository(SourceRepositoryPropertiesInner sourceRepository);
         }
@@ -168,8 +157,6 @@ public interface BuildTask extends HasInner<BuildTaskInner>, Indexable, Refresha
         interface WithStatus {
             /**
              * Specifies status.
-             * @param status The current status of build task. Possible values include: 'Disabled', 'Enabled'
-             * @return the next definition stage
              */
             WithCreate withStatus(BuildTaskStatus status);
         }
@@ -180,8 +167,6 @@ public interface BuildTask extends HasInner<BuildTaskInner>, Indexable, Refresha
         interface WithTags {
             /**
              * Specifies tags.
-             * @param tags The tags of the resource
-             * @return the next definition stage
              */
             WithCreate withTags(Map<String, String> tags);
         }
@@ -192,8 +177,6 @@ public interface BuildTask extends HasInner<BuildTaskInner>, Indexable, Refresha
         interface WithTimeout {
             /**
              * Specifies timeout.
-             * @param timeout Build timeout in seconds
-             * @return the next definition stage
              */
             WithCreate withTimeout(Integer timeout);
         }
@@ -222,8 +205,6 @@ public interface BuildTask extends HasInner<BuildTaskInner>, Indexable, Refresha
         interface WithAlias {
             /**
              * Specifies alias.
-             * @param alias The alternative updatable name for a build task
-             * @return the next update stage
              */
             Update withAlias(String alias);
         }
@@ -234,8 +215,6 @@ public interface BuildTask extends HasInner<BuildTaskInner>, Indexable, Refresha
         interface WithPlatform {
             /**
              * Specifies platform.
-             * @param platform The platform properties against which the build has to happen
-             * @return the next update stage
              */
             Update withPlatform(PlatformProperties platform);
         }
@@ -246,8 +225,6 @@ public interface BuildTask extends HasInner<BuildTaskInner>, Indexable, Refresha
         interface WithSourceRepository {
             /**
              * Specifies sourceRepository.
-             * @param sourceRepository The properties that describes the source(code) for the build task
-             * @return the next update stage
              */
             Update withSourceRepository(SourceRepositoryUpdateParameters sourceRepository);
         }
@@ -258,8 +235,6 @@ public interface BuildTask extends HasInner<BuildTaskInner>, Indexable, Refresha
         interface WithStatus {
             /**
              * Specifies status.
-             * @param status The current status of build task. Possible values include: 'Disabled', 'Enabled'
-             * @return the next update stage
              */
             Update withStatus(BuildTaskStatus status);
         }
@@ -270,8 +245,6 @@ public interface BuildTask extends HasInner<BuildTaskInner>, Indexable, Refresha
         interface WithTags {
             /**
              * Specifies tags.
-             * @param tags The ARM resource tags
-             * @return the next update stage
              */
             Update withTags(Map<String, String> tags);
         }
@@ -282,8 +255,6 @@ public interface BuildTask extends HasInner<BuildTaskInner>, Indexable, Refresha
         interface WithTimeout {
             /**
              * Specifies timeout.
-             * @param timeout Build timeout in seconds
-             * @return the next update stage
              */
             Update withTimeout(Integer timeout);
         }
