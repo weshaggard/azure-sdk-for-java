@@ -16,25 +16,30 @@ import rx.functions.Func1;
 import com.microsoft.azure.management.appservice.v2018_02_01.Sites;
 import com.microsoft.azure.Page;
 import rx.Completable;
+import java.util.List;
 import com.microsoft.azure.management.appservice.v2018_02_01.CustomHostnameAnalysisResult;
 import com.microsoft.azure.management.appservice.v2018_02_01.BackupItem;
 import com.microsoft.azure.management.appservice.v2018_02_01.SiteConfigResource;
 import com.microsoft.azure.management.appservice.v2018_02_01.BackupRequest;
 import com.microsoft.azure.management.appservice.v2018_02_01.StringDictionary;
+import com.microsoft.azure.management.appservice.v2018_02_01.SwiftVirtualNetwork;
+import com.microsoft.azure.management.appservice.v2018_02_01.RestoreRequest;
 import com.microsoft.azure.management.appservice.v2018_02_01.RelayServiceConnectionEntity;
 import com.microsoft.azure.management.appservice.v2018_02_01.SiteCloneability;
 import com.microsoft.azure.management.appservice.v2018_02_01.FunctionSecrets;
 import com.microsoft.azure.management.appservice.v2018_02_01.StorageMigrationResponse;
 import com.microsoft.azure.management.appservice.v2018_02_01.Operation;
+import com.microsoft.azure.management.appservice.v2018_02_01.NetworkTrace;
 import com.microsoft.azure.management.appservice.v2018_02_01.SitePhpErrorLogFlag;
 import com.microsoft.azure.management.appservice.v2018_02_01.SlotDifference;
 import com.microsoft.azure.management.appservice.v2018_02_01.CsmSlotEntity;
 import com.microsoft.azure.management.appservice.v2018_02_01.StorageMigrationOptions;
 import com.microsoft.azure.management.appservice.v2018_02_01.MigrateMySqlRequest;
+import com.microsoft.azure.management.appservice.v2018_02_01.CsmPublishingProfileOptions;
 import com.microsoft.azure.management.appservice.v2018_02_01.DeletedAppRestoreRequest;
 import com.microsoft.azure.management.appservice.v2018_02_01.SnapshotRestoreRequest;
-import com.microsoft.azure.management.appservice.v2018_02_01.RestoreRequest;
 import com.microsoft.azure.management.appservice.v2018_02_01.SiteAuthSettings;
+import com.microsoft.azure.management.appservice.v2018_02_01.AzureStoragePropertyDictionaryResource;
 import com.microsoft.azure.management.appservice.v2018_02_01.ConnectionStringDictionary;
 import com.microsoft.azure.management.appservice.v2018_02_01.SiteLogsConfig;
 import com.microsoft.azure.management.appservice.v2018_02_01.User;
@@ -62,6 +67,7 @@ import com.microsoft.azure.management.appservice.v2018_02_01.MigrateMySqlStatus;
 import com.microsoft.azure.management.appservice.v2018_02_01.NetworkFeatures;
 import com.microsoft.azure.management.appservice.v2018_02_01.PerfMonResponse;
 import com.microsoft.azure.management.appservice.v2018_02_01.PremierAddOn;
+import com.microsoft.azure.management.appservice.v2018_02_01.PremierAddOnPatchResource;
 import com.microsoft.azure.management.appservice.v2018_02_01.PrivateAccess;
 import com.microsoft.azure.management.appservice.v2018_02_01.PublicCertificate;
 import com.microsoft.azure.management.appservice.v2018_02_01.SiteExtensionInfo;
@@ -71,19 +77,18 @@ import com.microsoft.azure.management.appservice.v2018_02_01.TriggeredWebJob;
 import com.microsoft.azure.management.appservice.v2018_02_01.TriggeredJobHistory;
 import com.microsoft.azure.management.appservice.v2018_02_01.SiteCsmUsageQuota;
 import com.microsoft.azure.management.appservice.v2018_02_01.SiteVnetInfo;
-import java.util.List;
 import com.microsoft.azure.management.appservice.v2018_02_01.SiteVnetGateway;
 import com.microsoft.azure.management.appservice.v2018_02_01.WebJob;
 
 class WebAppsImpl extends WrapperImpl<WebAppsInner> implements WebApps {
-    private final AppServiceManager manager;
+    private final CertificateRegistrationManager manager;
 
-    WebAppsImpl(AppServiceManager manager) {
+    WebAppsImpl(CertificateRegistrationManager manager) {
         super(manager.inner().webApps());
         this.manager = manager;
     }
 
-    public AppServiceManager manager() {
+    public CertificateRegistrationManager manager() {
         return this.manager;
     }
 
@@ -621,6 +626,48 @@ class WebAppsImpl extends WrapperImpl<WebAppsInner> implements WebApps {
     }
 
     @Override
+    public Observable<SwiftVirtualNetwork> getSwiftVirtualNetworkConnectionAsync(String resourceGroupName, String name) {
+        WebAppsInner client = this.inner();
+        return client.getSwiftVirtualNetworkConnectionAsync(resourceGroupName, name)
+        .map(new Func1<SwiftVirtualNetworkInner, SwiftVirtualNetwork>() {
+            @Override
+            public SwiftVirtualNetwork call(SwiftVirtualNetworkInner inner) {
+                return new SwiftVirtualNetworkImpl(inner, manager());
+            }
+        });
+    }
+
+    @Override
+    public Observable<SwiftVirtualNetwork> createOrUpdateSwiftVirtualNetworkConnectionAsync(String resourceGroupName, String name, SwiftVirtualNetworkInner connectionEnvelope) {
+        WebAppsInner client = this.inner();
+        return client.createOrUpdateSwiftVirtualNetworkConnectionAsync(resourceGroupName, name, connectionEnvelope)
+        .map(new Func1<SwiftVirtualNetworkInner, SwiftVirtualNetwork>() {
+            @Override
+            public SwiftVirtualNetwork call(SwiftVirtualNetworkInner inner) {
+                return new SwiftVirtualNetworkImpl(inner, manager());
+            }
+        });
+    }
+
+    @Override
+    public Completable deleteSwiftVirtualNetworkAsync(String resourceGroupName, String name) {
+        WebAppsInner client = this.inner();
+        return client.deleteSwiftVirtualNetworkAsync(resourceGroupName, name).toCompletable();
+    }
+
+    @Override
+    public Observable<SwiftVirtualNetwork> updateSwiftVirtualNetworkConnectionAsync(String resourceGroupName, String name, SwiftVirtualNetworkInner connectionEnvelope) {
+        WebAppsInner client = this.inner();
+        return client.updateSwiftVirtualNetworkConnectionAsync(resourceGroupName, name, connectionEnvelope)
+        .map(new Func1<SwiftVirtualNetworkInner, SwiftVirtualNetwork>() {
+            @Override
+            public SwiftVirtualNetwork call(SwiftVirtualNetworkInner inner) {
+                return new SwiftVirtualNetworkImpl(inner, manager());
+            }
+        });
+    }
+
+    @Override
     public Observable<SiteConfigResource> getConfigurationAsync(String resourceGroupName, String name) {
         WebAppsInner client = this.inner();
         return client.getConfigurationAsync(resourceGroupName, name)
@@ -657,16 +704,28 @@ class WebAppsImpl extends WrapperImpl<WebAppsInner> implements WebApps {
     }
 
     @Override
-    public Completable getWebSiteContainerLogsAsync(String resourceGroupName, String name) {
+    public Observable<InputStream> getWebSiteContainerLogsAsync(String resourceGroupName, String name) {
         WebAppsInner client = this.inner();
-        return client.getWebSiteContainerLogsAsync(resourceGroupName, name).toCompletable();
+        return client.getWebSiteContainerLogsAsync(resourceGroupName, name)
+    ;}
+
+    @Override
+    public Observable<RestoreRequest> discoverBackupAsync(String resourceGroupName, String name, RestoreRequestInner request) {
+        WebAppsInner client = this.inner();
+        return client.discoverBackupAsync(resourceGroupName, name, request)
+        .map(new Func1<RestoreRequestInner, RestoreRequest>() {
+            @Override
+            public RestoreRequest call(RestoreRequestInner inner) {
+                return new RestoreRequestImpl(inner, manager());
+            }
+        });
     }
 
     @Override
-    public Completable getFunctionsAdminTokenAsync(String resourceGroupName, String name) {
+    public Observable<String> getFunctionsAdminTokenAsync(String resourceGroupName, String name) {
         WebAppsInner client = this.inner();
-        return client.getFunctionsAdminTokenAsync(resourceGroupName, name).toCompletable();
-    }
+        return client.getFunctionsAdminTokenAsync(resourceGroupName, name)
+    ;}
 
     @Override
     public Observable<RelayServiceConnectionEntity> listRelayServiceConnectionsAsync(String resourceGroupName, String name) {
@@ -771,15 +830,45 @@ class WebAppsImpl extends WrapperImpl<WebAppsInner> implements WebApps {
     }
 
     @Override
-    public Completable startWebSiteNetworkTraceAsync(String resourceGroupName, String name) {
+    public Observable<Object> getNetworkTraceOperationAsync(String resourceGroupName, String name, String operationId) {
         WebAppsInner client = this.inner();
-        return client.startWebSiteNetworkTraceAsync(resourceGroupName, name).toCompletable();
-    }
+        return client.getNetworkTraceOperationAsync(resourceGroupName, name, operationId)
+    ;}
+
+    @Override
+    public Observable<String> startWebSiteNetworkTraceAsync(String resourceGroupName, String name) {
+        WebAppsInner client = this.inner();
+        return client.startWebSiteNetworkTraceAsync(resourceGroupName, name)
+    ;}
+
+    @Override
+    public Observable<Object> startWebSiteNetworkTraceOperationAsync(String resourceGroupName, String name) {
+        WebAppsInner client = this.inner();
+        return client.startWebSiteNetworkTraceOperationAsync(resourceGroupName, name)
+    ;}
 
     @Override
     public Completable stopWebSiteNetworkTraceAsync(String resourceGroupName, String name) {
         WebAppsInner client = this.inner();
         return client.stopWebSiteNetworkTraceAsync(resourceGroupName, name).toCompletable();
+    }
+
+    @Override
+    public Observable<NetworkTrace> getNetworkTracesAsync(String resourceGroupName, String name, String operationId) {
+        WebAppsInner client = this.inner();
+        return client.getNetworkTracesAsync(resourceGroupName, name, operationId)
+        .flatMap(new Func1<List<NetworkTraceInner>, Observable<NetworkTraceInner>>() {
+            @Override
+            public Observable<NetworkTraceInner> call(List<NetworkTraceInner> innerList) {
+                return Observable.from(innerList);
+            }
+        })
+        .map(new Func1<NetworkTraceInner, NetworkTrace>() {
+            @Override
+            public NetworkTrace call(NetworkTraceInner inner) {
+                return new NetworkTraceImpl(inner, manager());
+            }
+        });
     }
 
     @Override
@@ -801,16 +890,16 @@ class WebAppsImpl extends WrapperImpl<WebAppsInner> implements WebApps {
     }
 
     @Override
-    public Completable getProcessDumpAsync(String resourceGroupName, String name, String processId) {
+    public Observable<InputStream> getProcessDumpAsync(String resourceGroupName, String name, String processId) {
         WebAppsInner client = this.inner();
-        return client.getProcessDumpAsync(resourceGroupName, name, processId).toCompletable();
-    }
+        return client.getProcessDumpAsync(resourceGroupName, name, processId)
+    ;}
 
     @Override
-    public Completable listPublishingProfileXmlWithSecretsAsync(String resourceGroupName, String name) {
+    public Observable<InputStream> listPublishingProfileXmlWithSecretsAsync(String resourceGroupName, String name, CsmPublishingProfileOptions publishingProfileOptions) {
         WebAppsInner client = this.inner();
-        return client.listPublishingProfileXmlWithSecretsAsync(resourceGroupName, name).toCompletable();
-    }
+        return client.listPublishingProfileXmlWithSecretsAsync(resourceGroupName, name, publishingProfileOptions)
+    ;}
 
     @Override
     public Completable resetProductionSlotConfigAsync(String resourceGroupName, String name) {
@@ -927,18 +1016,6 @@ class WebAppsImpl extends WrapperImpl<WebAppsInner> implements WebApps {
     }
 
     @Override
-    public Observable<RestoreRequest> discoverRestoreAsync(String resourceGroupName, String name, RestoreRequestInner request) {
-        WebAppsInner client = this.inner();
-        return client.discoverRestoreAsync(resourceGroupName, name, request)
-        .map(new Func1<RestoreRequestInner, RestoreRequest>() {
-            @Override
-            public RestoreRequest call(RestoreRequestInner inner) {
-                return new RestoreRequestImpl(inner, manager());
-            }
-        });
-    }
-
-    @Override
     public Observable<BackupItem> listBackupStatusSecretsAsync(String resourceGroupName, String name, String backupId, BackupRequestInner request) {
         WebAppsInner client = this.inner();
         return client.listBackupStatusSecretsAsync(resourceGroupName, name, backupId, request)
@@ -970,18 +1047,6 @@ class WebAppsImpl extends WrapperImpl<WebAppsInner> implements WebApps {
             @Override
             public BackupItem call(BackupItemInner inner) {
                 return new BackupItemImpl(inner, manager());
-            }
-        });
-    }
-
-    @Override
-    public Observable<RestoreRequest> discoverRestoreSlotAsync(String resourceGroupName, String name, String slot, RestoreRequestInner request) {
-        WebAppsInner client = this.inner();
-        return client.discoverRestoreSlotAsync(resourceGroupName, name, slot, request)
-        .map(new Func1<RestoreRequestInner, RestoreRequest>() {
-            @Override
-            public RestoreRequest call(RestoreRequestInner inner) {
-                return new RestoreRequestImpl(inner, manager());
             }
         });
     }
@@ -1114,6 +1179,54 @@ class WebAppsImpl extends WrapperImpl<WebAppsInner> implements WebApps {
             @Override
             public SiteAuthSettings call(SiteAuthSettingsInner inner) {
                 return new SiteAuthSettingsImpl(inner, manager());
+            }
+        });
+    }
+
+    @Override
+    public Observable<AzureStoragePropertyDictionaryResource> updateAzureStorageAccountsAsync(String resourceGroupName, String name, AzureStoragePropertyDictionaryResourceInner azureStorageAccounts) {
+        WebAppsInner client = this.inner();
+        return client.updateAzureStorageAccountsAsync(resourceGroupName, name, azureStorageAccounts)
+        .map(new Func1<AzureStoragePropertyDictionaryResourceInner, AzureStoragePropertyDictionaryResource>() {
+            @Override
+            public AzureStoragePropertyDictionaryResource call(AzureStoragePropertyDictionaryResourceInner inner) {
+                return new AzureStoragePropertyDictionaryResourceImpl(inner, manager());
+            }
+        });
+    }
+
+    @Override
+    public Observable<AzureStoragePropertyDictionaryResource> listAzureStorageAccountsAsync(String resourceGroupName, String name) {
+        WebAppsInner client = this.inner();
+        return client.listAzureStorageAccountsAsync(resourceGroupName, name)
+        .map(new Func1<AzureStoragePropertyDictionaryResourceInner, AzureStoragePropertyDictionaryResource>() {
+            @Override
+            public AzureStoragePropertyDictionaryResource call(AzureStoragePropertyDictionaryResourceInner inner) {
+                return new AzureStoragePropertyDictionaryResourceImpl(inner, manager());
+            }
+        });
+    }
+
+    @Override
+    public Observable<AzureStoragePropertyDictionaryResource> updateAzureStorageAccountsSlotAsync(String resourceGroupName, String name, String slot, AzureStoragePropertyDictionaryResourceInner azureStorageAccounts) {
+        WebAppsInner client = this.inner();
+        return client.updateAzureStorageAccountsSlotAsync(resourceGroupName, name, slot, azureStorageAccounts)
+        .map(new Func1<AzureStoragePropertyDictionaryResourceInner, AzureStoragePropertyDictionaryResource>() {
+            @Override
+            public AzureStoragePropertyDictionaryResource call(AzureStoragePropertyDictionaryResourceInner inner) {
+                return new AzureStoragePropertyDictionaryResourceImpl(inner, manager());
+            }
+        });
+    }
+
+    @Override
+    public Observable<AzureStoragePropertyDictionaryResource> listAzureStorageAccountsSlotAsync(String resourceGroupName, String name, String slot) {
+        WebAppsInner client = this.inner();
+        return client.listAzureStorageAccountsSlotAsync(resourceGroupName, name, slot)
+        .map(new Func1<AzureStoragePropertyDictionaryResourceInner, AzureStoragePropertyDictionaryResource>() {
+            @Override
+            public AzureStoragePropertyDictionaryResource call(AzureStoragePropertyDictionaryResourceInner inner) {
+                return new AzureStoragePropertyDictionaryResourceImpl(inner, manager());
             }
         });
     }
@@ -1419,16 +1532,16 @@ class WebAppsImpl extends WrapperImpl<WebAppsInner> implements WebApps {
     }
 
     @Override
-    public Completable getContainerLogsZipAsync(String resourceGroupName, String name) {
+    public Observable<InputStream> getContainerLogsZipAsync(String resourceGroupName, String name) {
         WebAppsInner client = this.inner();
-        return client.getContainerLogsZipAsync(resourceGroupName, name).toCompletable();
-    }
+        return client.getContainerLogsZipAsync(resourceGroupName, name)
+    ;}
 
     @Override
-    public Completable getContainerLogsZipSlotAsync(String resourceGroupName, String name, String slot) {
+    public Observable<InputStream> getContainerLogsZipSlotAsync(String resourceGroupName, String name, String slot) {
         WebAppsInner client = this.inner();
-        return client.getContainerLogsZipSlotAsync(resourceGroupName, name, slot).toCompletable();
-    }
+        return client.getContainerLogsZipSlotAsync(resourceGroupName, name, slot)
+    ;}
 
     @Override
     public Observable<ContinuousWebJob> getContinuousWebJobAsync(String resourceGroupName, String name, String webJobName) {
@@ -2193,10 +2306,10 @@ class WebAppsImpl extends WrapperImpl<WebAppsInner> implements WebApps {
     }
 
     @Override
-    public Completable getInstanceProcessDumpAsync(String resourceGroupName, String name, String processId, String instanceId) {
+    public Observable<InputStream> getInstanceProcessDumpAsync(String resourceGroupName, String name, String processId, String instanceId) {
         WebAppsInner client = this.inner();
-        return client.getInstanceProcessDumpAsync(resourceGroupName, name, processId, instanceId).toCompletable();
-    }
+        return client.getInstanceProcessDumpAsync(resourceGroupName, name, processId, instanceId)
+    ;}
 
     @Override
     public Observable<SiteInstance> listInstanceIdentifiersSlotAsync(final String resourceGroupName, final String name, final String slot) {
@@ -2217,10 +2330,10 @@ class WebAppsImpl extends WrapperImpl<WebAppsInner> implements WebApps {
     }
 
     @Override
-    public Completable getInstanceProcessDumpSlotAsync(String resourceGroupName, String name, String processId, String slot, String instanceId) {
+    public Observable<InputStream> getInstanceProcessDumpSlotAsync(String resourceGroupName, String name, String processId, String slot, String instanceId) {
         WebAppsInner client = this.inner();
-        return client.getInstanceProcessDumpSlotAsync(resourceGroupName, name, processId, slot, instanceId).toCompletable();
-    }
+        return client.getInstanceProcessDumpSlotAsync(resourceGroupName, name, processId, slot, instanceId)
+    ;}
 
     @Override
     public Observable<ProcessInfo> getInstanceProcessAsync(String resourceGroupName, String name, String processId, String instanceId) {
@@ -2835,6 +2948,18 @@ class WebAppsImpl extends WrapperImpl<WebAppsInner> implements WebApps {
     }
 
     @Override
+    public Observable<PremierAddOn> updatePremierAddOnSlotAsync(String resourceGroupName, String name, String premierAddOnName, String slot, PremierAddOnPatchResource premierAddOn) {
+        WebAppsInner client = this.inner();
+        return client.updatePremierAddOnSlotAsync(resourceGroupName, name, premierAddOnName, slot, premierAddOn)
+        .map(new Func1<PremierAddOnInner, PremierAddOn>() {
+            @Override
+            public PremierAddOn call(PremierAddOnInner inner) {
+                return new PremierAddOnImpl(inner, manager());
+            }
+        });
+    }
+
+    @Override
     public Observable<PrivateAccess> getPrivateAccessAsync(String resourceGroupName, String name) {
         WebAppsInner client = this.inner();
         return client.getPrivateAccessAsync(resourceGroupName, name)
@@ -3189,6 +3314,48 @@ class WebAppsImpl extends WrapperImpl<WebAppsInner> implements WebApps {
     }
 
     @Override
+    public Observable<SwiftVirtualNetwork> getSwiftVirtualNetworkConnectionSlotAsync(String resourceGroupName, String name, String slot) {
+        WebAppsInner client = this.inner();
+        return client.getSwiftVirtualNetworkConnectionSlotAsync(resourceGroupName, name, slot)
+        .map(new Func1<SwiftVirtualNetworkInner, SwiftVirtualNetwork>() {
+            @Override
+            public SwiftVirtualNetwork call(SwiftVirtualNetworkInner inner) {
+                return new SwiftVirtualNetworkImpl(inner, manager());
+            }
+        });
+    }
+
+    @Override
+    public Observable<SwiftVirtualNetwork> createOrUpdateSwiftVirtualNetworkConnectionSlotAsync(String resourceGroupName, String name, String slot, SwiftVirtualNetworkInner connectionEnvelope) {
+        WebAppsInner client = this.inner();
+        return client.createOrUpdateSwiftVirtualNetworkConnectionSlotAsync(resourceGroupName, name, slot, connectionEnvelope)
+        .map(new Func1<SwiftVirtualNetworkInner, SwiftVirtualNetwork>() {
+            @Override
+            public SwiftVirtualNetwork call(SwiftVirtualNetworkInner inner) {
+                return new SwiftVirtualNetworkImpl(inner, manager());
+            }
+        });
+    }
+
+    @Override
+    public Completable deleteSwiftVirtualNetworkSlotAsync(String resourceGroupName, String name, String slot) {
+        WebAppsInner client = this.inner();
+        return client.deleteSwiftVirtualNetworkSlotAsync(resourceGroupName, name, slot).toCompletable();
+    }
+
+    @Override
+    public Observable<SwiftVirtualNetwork> updateSwiftVirtualNetworkConnectionSlotAsync(String resourceGroupName, String name, String slot, SwiftVirtualNetworkInner connectionEnvelope) {
+        WebAppsInner client = this.inner();
+        return client.updateSwiftVirtualNetworkConnectionSlotAsync(resourceGroupName, name, slot, connectionEnvelope)
+        .map(new Func1<SwiftVirtualNetworkInner, SwiftVirtualNetwork>() {
+            @Override
+            public SwiftVirtualNetwork call(SwiftVirtualNetworkInner inner) {
+                return new SwiftVirtualNetworkImpl(inner, manager());
+            }
+        });
+    }
+
+    @Override
     public Observable<SiteConfigResource> getConfigurationSlotAsync(String resourceGroupName, String name, String slot) {
         WebAppsInner client = this.inner();
         return client.getConfigurationSlotAsync(resourceGroupName, name, slot)
@@ -3225,16 +3392,28 @@ class WebAppsImpl extends WrapperImpl<WebAppsInner> implements WebApps {
     }
 
     @Override
-    public Completable getWebSiteContainerLogsSlotAsync(String resourceGroupName, String name, String slot) {
+    public Observable<InputStream> getWebSiteContainerLogsSlotAsync(String resourceGroupName, String name, String slot) {
         WebAppsInner client = this.inner();
-        return client.getWebSiteContainerLogsSlotAsync(resourceGroupName, name, slot).toCompletable();
+        return client.getWebSiteContainerLogsSlotAsync(resourceGroupName, name, slot)
+    ;}
+
+    @Override
+    public Observable<RestoreRequest> discoverBackupSlotAsync(String resourceGroupName, String name, String slot, RestoreRequestInner request) {
+        WebAppsInner client = this.inner();
+        return client.discoverBackupSlotAsync(resourceGroupName, name, slot, request)
+        .map(new Func1<RestoreRequestInner, RestoreRequest>() {
+            @Override
+            public RestoreRequest call(RestoreRequestInner inner) {
+                return new RestoreRequestImpl(inner, manager());
+            }
+        });
     }
 
     @Override
-    public Completable getFunctionsAdminTokenSlotAsync(String resourceGroupName, String name, String slot) {
+    public Observable<String> getFunctionsAdminTokenSlotAsync(String resourceGroupName, String name, String slot) {
         WebAppsInner client = this.inner();
-        return client.getFunctionsAdminTokenSlotAsync(resourceGroupName, name, slot).toCompletable();
-    }
+        return client.getFunctionsAdminTokenSlotAsync(resourceGroupName, name, slot)
+    ;}
 
     @Override
     public Observable<RelayServiceConnectionEntity> listRelayServiceConnectionsSlotAsync(String resourceGroupName, String name, String slot) {
@@ -3315,15 +3494,45 @@ class WebAppsImpl extends WrapperImpl<WebAppsInner> implements WebApps {
     }
 
     @Override
-    public Completable startWebSiteNetworkTraceSlotAsync(String resourceGroupName, String name, String slot) {
+    public Observable<Object> getNetworkTraceOperationSlotAsync(String resourceGroupName, String name, String operationId, String slot) {
         WebAppsInner client = this.inner();
-        return client.startWebSiteNetworkTraceSlotAsync(resourceGroupName, name, slot).toCompletable();
-    }
+        return client.getNetworkTraceOperationSlotAsync(resourceGroupName, name, operationId, slot)
+    ;}
+
+    @Override
+    public Observable<String> startWebSiteNetworkTraceSlotAsync(String resourceGroupName, String name, String slot) {
+        WebAppsInner client = this.inner();
+        return client.startWebSiteNetworkTraceSlotAsync(resourceGroupName, name, slot)
+    ;}
+
+    @Override
+    public Observable<Object> startWebSiteNetworkTraceOperationSlotAsync(String resourceGroupName, String name, String slot) {
+        WebAppsInner client = this.inner();
+        return client.startWebSiteNetworkTraceOperationSlotAsync(resourceGroupName, name, slot)
+    ;}
 
     @Override
     public Completable stopWebSiteNetworkTraceSlotAsync(String resourceGroupName, String name, String slot) {
         WebAppsInner client = this.inner();
         return client.stopWebSiteNetworkTraceSlotAsync(resourceGroupName, name, slot).toCompletable();
+    }
+
+    @Override
+    public Observable<NetworkTrace> getNetworkTracesSlotAsync(String resourceGroupName, String name, String operationId, String slot) {
+        WebAppsInner client = this.inner();
+        return client.getNetworkTracesSlotAsync(resourceGroupName, name, operationId, slot)
+        .flatMap(new Func1<List<NetworkTraceInner>, Observable<NetworkTraceInner>>() {
+            @Override
+            public Observable<NetworkTraceInner> call(List<NetworkTraceInner> innerList) {
+                return Observable.from(innerList);
+            }
+        })
+        .map(new Func1<NetworkTraceInner, NetworkTrace>() {
+            @Override
+            public NetworkTrace call(NetworkTraceInner inner) {
+                return new NetworkTraceImpl(inner, manager());
+            }
+        });
     }
 
     @Override
@@ -3345,16 +3554,16 @@ class WebAppsImpl extends WrapperImpl<WebAppsInner> implements WebApps {
     }
 
     @Override
-    public Completable getProcessDumpSlotAsync(String resourceGroupName, String name, String processId, String slot) {
+    public Observable<InputStream> getProcessDumpSlotAsync(String resourceGroupName, String name, String processId, String slot) {
         WebAppsInner client = this.inner();
-        return client.getProcessDumpSlotAsync(resourceGroupName, name, processId, slot).toCompletable();
-    }
+        return client.getProcessDumpSlotAsync(resourceGroupName, name, processId, slot)
+    ;}
 
     @Override
-    public Completable listPublishingProfileXmlWithSecretsSlotAsync(String resourceGroupName, String name, String slot) {
+    public Observable<InputStream> listPublishingProfileXmlWithSecretsSlotAsync(String resourceGroupName, String name, String slot, CsmPublishingProfileOptions publishingProfileOptions) {
         WebAppsInner client = this.inner();
-        return client.listPublishingProfileXmlWithSecretsSlotAsync(resourceGroupName, name, slot).toCompletable();
-    }
+        return client.listPublishingProfileXmlWithSecretsSlotAsync(resourceGroupName, name, slot, publishingProfileOptions)
+    ;}
 
     @Override
     public Completable resetSlotConfigurationSlotAsync(String resourceGroupName, String name, String slot) {
