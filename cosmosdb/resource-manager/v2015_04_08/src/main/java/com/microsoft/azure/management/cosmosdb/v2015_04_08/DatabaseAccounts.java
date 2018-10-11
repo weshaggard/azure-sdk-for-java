@@ -118,7 +118,7 @@ public interface DatabaseAccounts extends SupportsCreating<DatabaseAccount.Defin
      * @throws IllegalArgumentException thrown if parameters fail the validation
      * @return the observable for the request
      */
-    Completable checkNameExistsAsync(String accountName);
+    Observable<Boolean> checkNameExistsAsync(String accountName);
 
     /**
      * Retrieves the metrics determined by the given filter for the given database account.
